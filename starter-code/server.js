@@ -22,13 +22,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // ROUTES
 // Root Route
-
-
+app.get('/', function (req, res) {
+  res.send('Guess a Number');
+});
 // Gallery View Route
-
+app.get('/view', function(req, res){
+  res.sendFile('/home/pengfei/wdi/express-routes-training/starter-code/views/index.html')
+})
 
 // The Number Guessing Game
-
+app.get('/guess', function(req, res){
+  var correct=10;
+  if(parseInt(req.query.number)>correct){
+    res.send("Too High")
+  }
+  if(parseInt(req.query.number)<correct){
+    res.send("Too Low")}
+  if(parseInt(req.query.number)===correct){res.send("Nailed It")
+  }
+})
 
 // Gallery
 
