@@ -12,6 +12,12 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Allow CORS:
+
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+})
 // not necessary since we'll be making requests from a js file
   // that we are also serving (as static assets in public)
 // app.use(function(request, response, next) {
@@ -31,18 +37,22 @@ app.get('/view', function(req, res){
 })
 
 // The Number Guessing Game
+var correct=10;
 app.get('/guess', function(req, res){
-  var correct=10;
-  if(parseInt(req.query.number)>correct){
-    res.send("Too High")
-  }
-  if(parseInt(req.query.number)<correct){
+  if(parseInt(req.query.number)===correct){res.send("Nailed It")}
+  else if(parseInt(req.query.number)>correct){
+    res.send("Too High")}
+    else if(parseInt(req.query.number)<correct){
     res.send("Too Low")}
-  if(parseInt(req.query.number)===correct){res.send("Nailed It")
-  }
+})
+
+app.post('/guess', function(req, res){
+  correct = parseInt(req.body.number);
+  res.send("New Number Updated")
 })
 
 // Gallery
+
 
 
 // SERVER START
